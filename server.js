@@ -25,4 +25,5 @@ app.get('/', function(요청, 응답){
 app.post('/add', function(요청, 응답){
     응답.send('전송완료')
     console.log(요청.body.title)
+    console.log(요청.body.date)
 });
