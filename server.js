@@ -2,16 +2,25 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : true}));
-
 const MongoClient = require('mongodb').MongoClient;
-MongoClient.connect('mongodb+srv://tjsdnd3103:<dkssud159>@sunwoong.pbgylxn.mongodb.net/?retryWrites=true&w=majority', 
-function(에러, client){
+
+
+MongoClient.connect('mongodb+srv://tjsdnd3103:tjsdnd3103@sunwoong.pbgylxn.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
+    
+    
+    if(에러) return console.log(에러)
+
+    db = client.db('todoapp'); //mongodb의 todoapp에 연결
+    
+    db.collection('post').insertOne({이름 : 'Woong', 나이 : 25}, function(에러, 결과){
+        console.log('저장완료')
+    });
 
     app.listen(8080, function(){
         console.log('listening on 8080')
     });
 
-})
+});
 
 
 
