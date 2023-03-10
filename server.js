@@ -47,4 +47,8 @@ app.post('/add', function(요청, 응답){
     응답.send('전송완료!!!')
     console.log(요청.body.title)
     console.log(요청.body.date)
+    db.collection('post').insertOne( { 제목 : 요청.body.title, 날짜 : 요청.body.date } , function(){
+        console.log('저장완료')
+      });
 });
+
