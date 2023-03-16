@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : true}));
 const MongoClient = require('mongodb').MongoClient;
-
+app.set('view engine', 'ejs');
 
 MongoClient.connect('mongodb+srv://tjsdnd3103:tjsdnd3103@sunwoong.pbgylxn.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
     
@@ -50,5 +50,12 @@ app.post('/add', function(요청, 응답){
     db.collection('post').insertOne( { 제목 : 요청.body.title, 날짜 : 요청.body.date } , function(){
         console.log('저장완료')
       });
+});
+ 
+///list로 GET요청으로 접속하면
+//실제 DB에 저장된 데이터들로 예쁘게 꾸며진HTML을 보여줌
+
+app.get('/list', function(요총, 응답){
+    응답.render('list.ejs');
 });
 
