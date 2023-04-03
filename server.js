@@ -95,3 +95,16 @@ app.delete('/delete', function(요청, 응답){
         응답.status(200).send({ messsage : '성공했습니다' });
     });
 });
+
+
+
+app.get('/detail/:id', function(요청, 응답){
+    db.collection('post').findOne({_id : parseInt(요청.params.id)}, function(에러, 결과){
+        console.log(결과); 
+        응답.render('detail.ejs', {data : 결과});
+        //어떤사람이 detail/??로 접속하면
+        //DB에서 {_id:?}인 게시물로 찾음 요청.params.id
+        //찾은 결과를 detail.ejs로 보냄
+    })
+
+})
