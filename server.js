@@ -3,7 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : true}));
 const MongoClient = require('mongodb').MongoClient;
+const methodeOverride =require('method-override')
+app.use(methodeOverride('_methode'))
 app.set('view engine', 'ejs');
+app.use('/public', express.static('public'));
 
 MongoClient.connect('mongodb+srv://tjsdnd3103:tjsdnd3103@sunwoong.pbgylxn.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
     
@@ -31,14 +34,30 @@ MongoClient.connect('mongodb+srv://tjsdnd3103:tjsdnd3103@sunwoong.pbgylxn.mongod
 // ??관련된 안내문을 띄워주자
 
 
-app.get('/', function(요청, 응답){ // '/'는 기본값홈페이지로 지정함
-    응답.sendFile(__dirname + '/index.html')
+// app.get('/index', function(요청, 응답){ // '/'는 기본값홈페이지로 지정함
+  //  응답.render('/index.ejs')
+//});
+// app.get('/write', function(요청, 응답){
+  //  응답.render('/write.ejs');
+ //}); 
 
+
+ app.get('/index', function(요청, 응답){
+      db.collection('post').find().toArray(function(에러, 결과){
+          console.log(결과);
+          응답.render('index.ejs', { posts : 결과}); 
+      });
+  });
+
+  app.get('/write', function(요청, 응답){
+    db.collection('post').find().toArray(function(에러, 결과){
+        console.log(결과);
+        응답.render('write.ejs', { posts : 결과}); 
+    });
 });
 
- app.get('/write', function(요청, 응답){
-    응답.sendFile(__dirname + '/write.html');
- }); 
+
+
 
  //어떤 사람이 /add 경로로 POST 요청을 하면...
  //?? 를 해주세요~
@@ -57,33 +76,20 @@ app.post('/add', function(요청, 응답){
             })
           });
 
-    
-
-
     });
     
 });
 
-
-
-
-
-
-
-
 ///list로 GET요청으로 접속하면
 //실제 DB에 저장된 데이터들로 예쁘게 꾸며진HTML을 보여줌
 
-app.get('/list', function(요총, 응답){
+app.get('/list', function(요청, 응답){
   //디비에 저장된 post라는 collection안의 모든 데이터를 꺼내주세요
     db.collection('post').find().toArray(function(에러, 결과){
         console.log(결과);
         응답.render('list.ejs', { posts : 결과}); //여기가 ejs 파일 보여주는거임
                                                //왜 이렇게 코드 짯냐면 데이터를 먼저 꺼내오고 ejs를 보여줘야겠죠?
     });
-
-
-    
 });
 
 app.delete('/delete', function(요청, 응답){
@@ -108,3 +114,23 @@ app.get('/detail/:id', function(요청, 응답){
     })
 
 })
+
+
+app.get('/edit/:id', function(요청,응답){
+
+    db.collection('post').findOne({_id : parseInt(요청.params.id)}, function(에러, 결과){
+        console.log(결과)
+        응답.render('edit.ejs', {post : 결과})
+    })
+    
+})
+
+//$set은 업데이트 해주세요(없으면 추가해주시고요)
+app.put('/edit', function(요청, 응답){
+    db.collection('post').updateOne({ _id : parseInt(요청.body.id)},{ $set : { 제목: 요청.body.title, 날짜 : 요청.body.date } }, function
+        (에러, 결과){ 
+        console.log('수정완료')
+        응답.redirect('/list')
+    })
+    
+});
