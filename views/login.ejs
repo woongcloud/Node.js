@@ -13,20 +13,19 @@
   
   
   <%- include('nav.html') %> <!-- 나는 이자리에 nav.html을 박을거임-->
- 
+
 
   <h4 class="container mt-4"><strong>글 작성페이지</strong></h4>
 
   <div class="container mt-3">
-    <form action="/edit?_methode=PUT" method="POST">
+    <form action="/login" method="POST">
       <div class="form-group">
-        <label>할일</label>
-        <input type="text" value="<%= post._id %>" name="id" style="display: none;">
-        <input value="<%= post.제목 %>" type="text" class="form-control" name="title">
+        <label>오늘의 할일</label>
+        <input type="text" class="form-control" name="id">
       </div>
       <div class="form-group">
         <label>날짜</label>
-        <input value="<%= post.날짜 %>" type="text" class="form-control" name="date">
+        <input type="text" class="form-control" name="pw">
       </div>
       <button type="submit" class="btn btn-danger">전송</button>
     </form>
