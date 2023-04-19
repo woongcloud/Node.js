@@ -7,6 +7,7 @@ const methodeOverride =require('method-override')
 app.use(methodeOverride('_methode'))
 app.set('view engine', 'ejs');
 app.use('/public', express.static('public'));
+require('dotenv').config()
 
 MongoClient.connect('mongodb+srv://tjsdnd3103:tjsdnd3103@sunwoong.pbgylxn.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
     
@@ -91,6 +92,14 @@ app.get('/list', function(요청, 응답){
                                                //왜 이렇게 코드 짯냐면 데이터를 먼저 꺼내오고 ejs를 보여줘야겠죠?
     });
 });
+app.get('/search', (요청, 응답)=>{
+    console.log(요청.query.value);
+    db.collection('post').find({제목:요청.query.value}).toArray((에러, 결과) => {
+        console.log(결과)
+    })
+  })
+
+
 
 app.delete('/delete', function(요청, 응답){
     console.log(요청.body)

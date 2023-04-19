@@ -13,6 +13,8 @@
     <title>hi</title>
   </head>
   <body>
+
+    
     <%- include('nav.html') %> <!-- 나는 이자리에 nav.html을 박을거임-->
 
       <!-- 반복문에 post[0]쓰면 0만 반복하니까
@@ -24,6 +26,18 @@
         <button>삭제</button>
      <% } %>
     -->
+    <div class="container input-group mb-2">
+      <input class="form-control" id="search-input">
+      <button class="input-group-append btn btn-danger" id="search">검색</button>
+    </div>
+    
+    
+
+   
+
+
+
+
 
   <div class="container">
      <ul class="list-group">
@@ -39,6 +53,8 @@
 
   </div> 
 
+
+ 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script> </script>
   
   <script>
@@ -69,7 +85,13 @@
   </script>
 
 
+<script>
+  $('#search').click(function(){
+    var 입력한값 = $('#search-input').val();
+    window.location.replace('/search?value=' + 입력한값)
+  });
 
+</script>
 
    <!--   <h4>할일 제목 : <%= posts[0].제목 %> </h4> 
       <p>할일 마감날짜 : <%= posts[0].날짜 %></p>
