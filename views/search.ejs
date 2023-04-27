@@ -4,59 +4,62 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="/public/main.css">
-
+ 
 
     <title>hi</title>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script> </script>
+
     
     <%- include('nav.html') %> <!-- 나는 이자리에 nav.html을 박을거임-->
 
       
-      <h4 class="ml-2 my-3 text-center">서버에서 가져온 할일 리스트</h4><!--점찍고 제목이나 날짜-->
+      <h4 class="ml-2 my-3 text-center">검색결과 리스트📦</h4><!--점찍고 제목이나 날짜-->
    
+
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script> </script>
     <div class="container input-group mb-2">
       <input class="form-control" id="search-input">
       <button class="input-group-append btn btn-danger" id="search">검색</button>
     </div>
     
+
     <script>
       $('#search').click(function(){
-        var 입력한값 = $('#search-input').val();
+        var 입력한값 = $('#search-input').val()
         window.location.replace('/search?value=' + 입력한값)
-      });
+      })
+    
     </script>
 
 
 
-  <div class="container">
-     <ul class="list-group">
-      <% for (var i = 0; i < posts.length ; i++){ %>
-      <li class="list-group-item">
-        <p>글번호 : <%= posts[i]._id %></p>
-        <h4>할일 제목 : <%= posts[i].제목 %> </h4> 
-        <p>할일 마감날짜 : <%= posts[i].날짜 %></p>
-        <button class="btn btn-danger delete" data-id="<%= posts[i]._id %>">삭제</button>
-      </li>
-      <% } %>
-    </ul>
+   <div class="container">
+    <ul class="list-group">
+     <% for (var i = 0; i < posts.length ; i++){ %>
+     <li class="list-group-item">
+       <p>글번호 : <%= posts[i]._id %></p>
+       <h4>할일 제목 : <%= posts[i].제목 %> </h4> 
+       <p>할일 마감날짜 : <%= posts[i].날짜 %></p>
+       <button class="btn btn-danger delete" data-id="<%= posts[i]._id %>">삭제</button>
+     </li>
+     <% } %>
+   </ul>
 
-  </div> 
+ </div> 
 
 
-  
+
+
 
  
 
   
   <script>
-
   $('.delete').click(function(e){
     var 글번호 = e.target.dataset.id; //내가 누른 요소의 data-id
     var 지금누른거 = $(this);
@@ -77,22 +80,22 @@
 })
 
   
-
-
-  
   </script>
 
 
 
 
-   <!--   <h4>할일 제목 : <%= posts[0].제목 %> </h4> 
-      <p>할일 마감날짜 : <%= posts[0].날짜 %></p>
-      
 
-      <h4>할일 제목 : <%= posts[1].제목 %> </h4>
-      <p>할일 마감날짜 : <%= posts[1].날짜 %></p> -->
 
-    
+
+
+
+
+
+
+
+
+
 
 
 
