@@ -242,3 +242,31 @@ app.delete('/delete', function(요청, 응답){
 
 app.use('/shop', require('./routes/shop.js'));
 app.use('/board', require('./routes/board.js'));
+
+let multer = require('multer'); //multer를 이용한 이미지 하드에 저장하기
+var storage = multer.diskStorage({
+
+  destination : function(req, file, cb){
+    cb(null, './public/image')
+  },
+  filename : function(req, file, cb){
+    cb(null, file.originalname ) //기존파일명
+  }
+
+});
+
+var upload = multer({storage : storage});
+
+
+app.get('/upload', function(요청, 응답) {
+  응답.render('upload.ejs')
+})
+
+app.post('/upload', upload.single('startup'), function(요청, 응답){
+  응답.send('업로드완료')
+});
+
+app.get('/image/:imageName', function(요청, 응답){  //URL파라미터 문법
+  응답.sendFile(__dirname + '/public/image/' + 요청.params.imageName )
+})
+
