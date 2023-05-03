@@ -43,19 +43,25 @@
         <h4>할일 제목 : <%= posts[i].제목 %> </h4> 
         <p>할일 마감날짜 : <%= posts[i].날짜 %></p>
         <button class="btn btn-danger delete" data-id="<%= posts[i]._id %>">삭제</button>
+        <button class="btn btn-secondary chat" data-id="<%= posts[i]._작성자 %>">채팅</button> 
       </li>
       <% } %>
     </ul>
 
   </div> 
-
-
   
-
- 
 
   
   <script>
+    $('.chat').click(function(e){
+      var id = e.target.dataset.id;
+      $.post('/chatroom', {당한사람id : id}).then(()=>{
+        console.log('성공')
+      })
+    });
+
+
+
 
   $('.delete').click(function(e){
     var 글번호 = e.target.dataset.id; //내가 누른 요소의 data-id
